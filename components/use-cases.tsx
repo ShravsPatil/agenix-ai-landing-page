@@ -1,42 +1,130 @@
 "use client"
 
+import { useState } from "react"
 import { Headphones, FileText, LineChart, DollarSign, Users, Megaphone } from "lucide-react"
 import { FadeIn, StaggerContainer, StaggerItem } from "./motion-wrapper"
+import { Modal } from "./modal"
+
+const useCasesData = [
+  {
+    icon: Headphones,
+    title: "Customer Support",
+    description:
+      "Automate ticket routing, response generation, and follow-ups while maintaining personalized service.",
+    fullDescription:
+      "Our AI-powered customer support agents transform how you handle customer inquiries. They understand context, sentiment, and urgency to provide instant, accurate responses 24/7.",
+    details: [
+      "AI analyzes incoming tickets and automatically categorizes them by topic, urgency, and sentiment",
+      "Generates personalized responses based on customer history and your knowledge base",
+      "Escalates complex issues to human agents with full context and suggested solutions",
+      "Automatically follows up with customers to ensure satisfaction"
+    ],
+    benefits: [
+      "Reduce response time from hours to seconds",
+      "Handle 10x more tickets without hiring",
+      "Improve customer satisfaction scores by 40%",
+      "Free your team to focus on complex issues"
+    ]
+  },
+  {
+    icon: FileText,
+    title: "Data Processing",
+    description: "Extract, validate, and organize information from documents, emails, and forms automatically.",
+    fullDescription:
+      "Eliminate manual data entry with intelligent document processing. Our AI agents can read, understand, and extract structured data from any document format.",
+    details: [
+      "Upload documents in any format - PDFs, images, emails, or scanned files",
+      "AI extracts relevant data fields with 99%+ accuracy using advanced OCR and NLP",
+      "Validates extracted data against your business rules and existing records",
+      "Exports clean, structured data to your preferred systems and databases"
+    ],
+    benefits: [
+      "Process documents 50x faster than manual entry",
+      "Eliminate human error in data extraction",
+      "Handle any document format or language",
+      "Seamlessly integrate with your existing workflows"
+    ]
+  },
+  {
+    icon: LineChart,
+    title: "Sales Operations",
+    description: "Qualify leads, schedule meetings, and update CRM records without manual data entry.",
+    fullDescription:
+      "Supercharge your sales team with AI agents that handle the busywork. From lead qualification to CRM updates, your team can focus on what they do best - closing deals.",
+    details: [
+      "AI scores and qualifies incoming leads based on your ideal customer profile",
+      "Automatically enriches lead data with company info, social profiles, and intent signals",
+      "Handles meeting scheduling, reminders, and follow-up sequences",
+      "Updates CRM records in real-time after every interaction"
+    ],
+    benefits: [
+      "Increase qualified leads by 3x",
+      "Save 15+ hours per rep per week",
+      "Never miss a follow-up again",
+      "100% CRM data accuracy"
+    ]
+  },
+  {
+    icon: DollarSign,
+    title: "Finance & Accounting",
+    description: "Process invoices, reconcile transactions, and generate reports with accuracy and speed.",
+    fullDescription:
+      "Automate your financial operations with AI agents built for precision. From invoice processing to reconciliation, ensure accuracy while saving countless hours.",
+    details: [
+      "Automatically capture and extract data from invoices, receipts, and statements",
+      "Match transactions across multiple accounts and flag discrepancies",
+      "Generate financial reports and forecasts on demand",
+      "Ensure compliance with automated audit trails"
+    ],
+    benefits: [
+      "Close books 5x faster",
+      "Reduce processing errors by 95%",
+      "Real-time financial visibility",
+      "Audit-ready documentation always"
+    ]
+  },
+  {
+    icon: Users,
+    title: "HR & Recruitment",
+    description: "Screen candidates, schedule interviews, and manage onboarding workflows efficiently.",
+    fullDescription:
+      "Transform your hiring process with AI agents that screen candidates, coordinate interviews, and streamline onboarding - all while providing a great candidate experience.",
+    details: [
+      "AI screens resumes and ranks candidates based on job requirements and culture fit",
+      "Handles interview scheduling, rescheduling, and calendar coordination",
+      "Sends personalized communications at every stage of the hiring process",
+      "Automates onboarding paperwork, training assignments, and check-ins"
+    ],
+    benefits: [
+      "Reduce time-to-hire by 60%",
+      "Screen 100x more candidates objectively",
+      "Improve candidate experience scores",
+      "Seamless onboarding from day one"
+    ]
+  },
+  {
+    icon: Megaphone,
+    title: "Marketing Automation",
+    description: "Personalize campaigns, analyze performance, and optimize content across channels.",
+    fullDescription:
+      "Deploy AI agents that understand your audience and optimize every campaign. From content creation to performance analysis, achieve marketing excellence at scale.",
+    details: [
+      "AI analyzes your audience segments and creates personalized messaging",
+      "Automatically A/B tests subject lines, content, and send times",
+      "Monitors campaign performance and adjusts strategies in real-time",
+      "Generates insights and recommendations for continuous improvement"
+    ],
+    benefits: [
+      "Increase email open rates by 45%",
+      "Personalize at scale without more work",
+      "Data-driven decisions, automatically",
+      "Consistent brand voice across channels"
+    ]
+  },
+]
 
 export function UseCases() {
-  const useCases = [
-    {
-      icon: Headphones,
-      title: "Customer Support",
-      description:
-        "Automate ticket routing, response generation, and follow-ups while maintaining personalized service.",
-    },
-    {
-      icon: FileText,
-      title: "Data Processing",
-      description: "Extract, validate, and organize information from documents, emails, and forms automatically.",
-    },
-    {
-      icon: LineChart,
-      title: "Sales Operations",
-      description: "Qualify leads, schedule meetings, and update CRM records without manual data entry.",
-    },
-    {
-      icon: DollarSign,
-      title: "Finance & Accounting",
-      description: "Process invoices, reconcile transactions, and generate reports with accuracy and speed.",
-    },
-    {
-      icon: Users,
-      title: "HR & Recruitment",
-      description: "Screen candidates, schedule interviews, and manage onboarding workflows efficiently.",
-    },
-    {
-      icon: Megaphone,
-      title: "Marketing Automation",
-      description: "Personalize campaigns, analyze performance, and optimize content across channels.",
-    },
-  ]
+  const [selectedUseCase, setSelectedUseCase] = useState<typeof useCasesData[0] | null>(null)
 
   return (
     <section id="use-cases" className="relative py-24 md:py-32 overflow-hidden">
@@ -66,7 +154,7 @@ export function UseCases() {
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
           staggerDelay={0.08}
         >
-          {useCases.map((useCase, index) => (
+          {useCasesData.map((useCase, index) => (
             <StaggerItem key={index}>
               <div className="glass-card rounded-2xl p-6 md:p-8 h-full group">
                 {/* Icon */}
@@ -84,18 +172,34 @@ export function UseCases() {
                   {useCase.description}
                 </p>
 
-                {/* Hover effect - Arrow */}
-                <div className="mt-5 flex items-center gap-2 text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                  <span className="text-sm font-medium opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300">Learn More</span>
-                  <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {/* Learn More Button */}
+                <button
+                  onClick={() => setSelectedUseCase(useCase)}
+                  className="mt-5 flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors duration-300"
+                >
+                  <span className="text-sm font-medium">Learn More</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                </div>
+                </button>
               </div>
             </StaggerItem>
           ))}
         </StaggerContainer>
       </div>
+
+      {/* Modal */}
+      {selectedUseCase && (
+        <Modal
+          isOpen={!!selectedUseCase}
+          onClose={() => setSelectedUseCase(null)}
+          title={selectedUseCase.title}
+          description={selectedUseCase.fullDescription}
+          details={selectedUseCase.details}
+          benefits={selectedUseCase.benefits}
+          icon={selectedUseCase.icon}
+        />
+      )}
     </section>
   )
 }

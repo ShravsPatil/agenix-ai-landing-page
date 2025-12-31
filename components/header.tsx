@@ -49,16 +49,8 @@ export function Header() {
             </Link>
           </nav>
 
-          <div className="flex items-center gap-3">
-            {/* Status indicator */}
-            <div className="hidden sm:flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse-soft"></span>
-              <span className="text-xs text-muted-foreground">Online</span>
-            </div>
-
-            {/* Theme Toggle */}
-            <ThemeToggle />
-          </div>
+          {/* Theme Toggle */}
+          <ThemeToggle />
         </div>
       </div>
     </motion.header>
